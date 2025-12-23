@@ -18,7 +18,7 @@ export class User {
     @Column({ length: 50 })
     provider: string;
 
-    @Column({ length: 50 })
+    @Column({ length: 50, default: 'user' })
     role: string;
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })

@@ -2,11 +2,13 @@ import { Controller, Body, Post, HttpCode, HttpStatus, Request, UseGuards, Get }
 import { AuthService } from './auth.service';
 import type { SignInWithGoogleDto } from './dto/sign-in-with-google.dto';
 import { AuthGuard } from './auth.guard';
+import { Public } from './skipAuth';
 
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
+    @Public()
     @HttpCode(HttpStatus.OK)
     @Post('google/signin')
     async signInWithGoogle(@Body() signInWithGoogleDto: SignInWithGoogleDto) {

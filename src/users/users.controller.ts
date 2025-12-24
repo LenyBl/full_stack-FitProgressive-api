@@ -1,10 +1,11 @@
 import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import type { CreateUserDto as userDto } from "./dto/create-user.dto";
+import { Public } from "src/auth/skipAuth";
 
 @Controller('users')
 export class UsersController {
-    constructor(private readonly usersService: UsersService) {}
+    constructor(private readonly usersService: UsersService) { }
 
     @Get()
     async findAll() {
@@ -15,6 +16,7 @@ export class UsersController {
         }
     }
 
+    @Public()
     @Get(':id')
     async findById(@Param('id') userId: number) {
         try {
@@ -24,6 +26,7 @@ export class UsersController {
         }
     }
 
+    @Public()
     @Get(':id/google')
     async findByGoogleId(@Param('id') googleId: string) {
         try {
@@ -33,6 +36,7 @@ export class UsersController {
         }
     }
 
+    @Public()
     @Post('/create')
     async createUser(@Body() createUserDto: userDto) {
         try {

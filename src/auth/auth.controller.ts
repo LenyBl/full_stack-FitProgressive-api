@@ -1,6 +1,6 @@
 import { Controller, Body, Post, HttpCode, HttpStatus, Request, UseGuards, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import type { SignInDto } from './dto/sign-in-with-google.dto';
+import type { SignInDto } from './dto/sign-in.dto';
 import { Public } from './skipAuth';
 
 @Controller('auth')

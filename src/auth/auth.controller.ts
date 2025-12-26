@@ -1,6 +1,6 @@
 import { Controller, Body, Post, HttpCode, HttpStatus, Request, UseGuards, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import type { SignInWithGoogleDto } from './dto/sign-in-with-google.dto';
+import type { SignInDto } from './dto/sign-in-with-google.dto';
 import { Public } from './skipAuth';
 
 @Controller('auth')
@@ -9,9 +9,9 @@ export class AuthController {
 
     @Public()
     @HttpCode(HttpStatus.OK)
-    @Post('google/signin')
-    async signInWithGoogle(@Body() signInWithGoogleDto: SignInWithGoogleDto) {
-        const { googleId } = signInWithGoogleDto;
-        return this.authService.signInWithGoogle(googleId);
+    @Post('signin')
+    async signIn(@Body() signInDto: SignInDto) {
+        const { email, password_hash } = signInDto;
+        return this.authService.signIn(email, password_hash);
     }
 }

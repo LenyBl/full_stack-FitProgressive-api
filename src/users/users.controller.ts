@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import type { CreateUserDto as userDto } from "./dto/create-user.dto";
 import { Public } from "src/auth/skipAuth";
+import * as bcrypt from 'bcrypt';
 
 @Controller('users')
 export class UsersController {
@@ -27,19 +28,11 @@ export class UsersController {
     }
 
     @Public()
-    @Get(':id/google')
-    async findByGoogleId(@Param('id') googleId: string) {
-        try {
-            return await this.usersService.findByGoogleId(googleId);
-        } catch (error) {
-            throw new Error('Failed to fetch user by Google ID');
-        }
-    }
-
-    @Public()
     @Post('/create')
     async createUser(@Body() createUserDto: userDto) {
         try {
+            const hashedPassword = await bcrypt.hash(createUserDto.password_hash, 10);
+            createUserDto.password_hash = hashedPassword;
             return await this.usersService.createUser(createUserDto);
         } catch (error) {
             throw new Error('Failed to create user');

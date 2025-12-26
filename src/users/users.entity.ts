@@ -5,9 +5,6 @@ export class User {
 
     @PrimaryGeneratedColumn()
     user_id: number;
-
-    @Column({ length: 191 })
-    google_id: string;
     
     @Column({ length: 191 })
     email: string;
@@ -15,8 +12,8 @@ export class User {
     @Column({ length: 50 })
     name: string;
 
-    @Column({ length: 50 })
-    provider: string;
+    @Column()
+    password_hash: string;
 
     @Column({ length: 50, default: 'user' })
     role: string;

@@ -18,8 +18,8 @@ export class UsersService {
     return this.userRepository.findOne({ where: { user_id: userId } });
   }
 
-  async findByGoogleId(googleId: string): Promise<User | null> {
-    return this.userRepository.findOne({ where: { google_id: googleId } });
+  async findByEmail(email: string): Promise<User | null> {
+    return this.userRepository.findOne({ where: { email } });
   }
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {

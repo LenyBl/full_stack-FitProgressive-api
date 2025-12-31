@@ -7,8 +7,8 @@ import { Public } from './skipAuth';
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
-    @Public()
     @HttpCode(HttpStatus.OK)
+    @Public()
     @Post('signin')
     async signIn(@Body() signInDto: SignInDto) {
         const { email, password_hash } = signInDto;

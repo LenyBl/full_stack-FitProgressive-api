@@ -31,6 +31,10 @@ export class UsersController {
     @Post('/create')
     async createUser(@Body() createUserDto: userDto) {
         try {
+            const userExists = await this.usersService.findByEmail(createUserDto.email);
+            if (userExists) {
+                throw new Error('User with this email already exists');
+            }
             const hashedPassword = await bcrypt.hash(createUserDto.password_hash, 10);
             createUserDto.password_hash = hashedPassword;
             return await this.usersService.createUser(createUserDto);

@@ -1,5 +1,6 @@
-import { Controller, Get, Req, Delete } from '@nestjs/common';
+import { Controller, Get, Req, Delete, Post, Param, Body } from '@nestjs/common';
 import { ProgramsService } from './programs.service';
+import type { CreateProgramDto } from './dto/create-program.dto';
 
 @Controller('programs')
 export class ProgramsController {
@@ -21,6 +22,16 @@ export class ProgramsController {
             return await this.programsService.findUserPrograms(userId);
         } catch (error) {
             throw new Error('Failed to fetch user programs');
+        }
+    }
+
+    @Post('create')
+    async createProgram(@Req() req, @Body() createProgramDto: CreateProgramDto){
+        const userId = req.user.sub;
+        try {
+            return this.programsService.createProgram(createProgramDto, userId)
+        } catch (error) {
+            throw new Error('Failed to create Program', error);
         }
     }
 

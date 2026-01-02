@@ -12,4 +12,9 @@ export class ProgramsService {
     async findAll(): Promise<Program[]> {
         return this.programRepository.find();
     }
+
+    async findUserPrograms(userId: number): Promise<Program[]> {
+        return this.programRepository.find({ where: { user_id: userId } });
+    }
+
 }

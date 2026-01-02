@@ -19,12 +19,12 @@ export class User {
     @Column({ length: 50, default: 'user' })
     role: string;
 
+    @OneToMany(() => Program, program => program.user_id)
+    programs: Program[];
+
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     created_at: Date;
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
     updated_at: Date;
-
-    @OneToMany(() => Program, program => program.user_id)
-    programs: Program[];
 }

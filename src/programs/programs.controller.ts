@@ -1,4 +1,4 @@
-import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Req, Delete } from '@nestjs/common';
 import { ProgramsService } from './programs.service';
 
 @Controller('programs')
@@ -21,6 +21,16 @@ export class ProgramsController {
             return await this.programsService.findUserPrograms(userId);
         } catch (error) {
             throw new Error('Failed to fetch user programs');
+        }
+    }
+
+    @Delete(':id')
+    async deleteProgram(@Req() req) {
+        try {
+            const programId = req.params.id;
+            return await this.programsService.deleteProgram(programId);
+        } catch (error) {
+            throw new Error('Failed to delete program');
         }
     }
 }

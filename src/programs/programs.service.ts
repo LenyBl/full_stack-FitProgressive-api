@@ -14,7 +14,10 @@ export class ProgramsService {
     }
 
     async findUserPrograms(userId: number): Promise<Program[]> {
-        return this.programRepository.find({ where: { user_id: userId } });
+        return this.programRepository.find({ where: { user: { user_id: userId } } });
     }
 
+    async deleteProgram(programId: number): Promise<void> {
+        await this.programRepository.delete(programId);
+    }
 }

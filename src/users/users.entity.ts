@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { Program } from "../programs/programs.entity";
 import { ExerciseLog } from "src/exercise_logs/exercise_logs.entity";
+import { Provider } from "src/providers/providers.entity";
 
 @Entity('users')
 export class User {
@@ -25,6 +26,9 @@ export class User {
 
     @OneToMany(() => ExerciseLog, exerciseLog => exerciseLog.user)
     exercise_logs: ExerciseLog[];
+
+    @OneToMany(() => Provider, provider => provider.user)
+    providers: Provider[];
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     created_at: Date;

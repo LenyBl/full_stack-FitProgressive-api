@@ -22,6 +22,15 @@ export class ProgramsService {
         return this.programRepository.find({ where: { user: { user_id: userId } } });
     }
 
+    async findProgramWithDays(programId: number): Promise<Program | null> {
+        return this.programRepository
+            .createQueryBuilder('program')
+            .innerJoinAndSelect('program.program_days', 'program_days')
+            .innerJoinAndSelect('program_days.day', 'day')
+            .where('program.program_id = :programId', { programId })
+            .getOne()
+    }
+
     async createProgram(createProgramDto: CreateProgramDto, userId: number): Promise<Program> {
 
         const program = {

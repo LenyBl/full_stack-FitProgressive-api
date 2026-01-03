@@ -4,7 +4,7 @@ import type { CreateProgramDto } from './dto/create-program.dto';
 
 @Controller('programs')
 export class ProgramsController {
-    constructor(private readonly programsService: ProgramsService) {}
+    constructor(private readonly programsService: ProgramsService) { }
 
     @Get()
     async findAll() {
@@ -25,8 +25,18 @@ export class ProgramsController {
         }
     }
 
+    @Get('program/:id')
+    async findProgramWithDays(@Param('id') programId: number) {
+        try {
+            return await this.programsService.findProgramWithDays(programId);
+        } catch (error) {
+            console.log(error);
+            throw new Error('Failed to find Program', error);
+        }
+    }
+
     @Post('create')
-    async createProgram(@Req() req, @Body() createProgramDto: CreateProgramDto){
+    async createProgram(@Req() req, @Body() createProgramDto: CreateProgramDto) {
         const userId = req.user.sub;
         try {
             return this.programsService.createProgram(createProgramDto, userId)

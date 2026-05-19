@@ -11,29 +11,4 @@ export class UsersService {
     private readonly usersRepository: Repository<User>,
   ) {}
 
-  findAll(): Promise<User[]> {
-    return this.usersRepository.find();
-  }
-
-  async findOne(uuid: string): Promise<User> {
-    const user = await this.usersRepository.findOneBy({ uuid });
-    if (!user) throw new NotFoundException(`User ${uuid} not found`);
-    return user;
-  }
-
-  create(dto: CreateUserDto): Promise<User> {
-    const user = this.usersRepository.create(dto);
-    return this.usersRepository.save(user);
-  }
-
-  async update(uuid: string, dto: UpdateUserDto): Promise<User> {
-    await this.findOne(uuid);
-    await this.usersRepository.update(uuid, dto);
-    return this.findOne(uuid);
-  }
-
-  async remove(uuid: string): Promise<void> {
-    await this.findOne(uuid);
-    await this.usersRepository.delete(uuid);
-  }
 }
